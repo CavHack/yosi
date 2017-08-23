@@ -80,3 +80,63 @@ print clf.best_score_
 
 #The chosen model
 svc_lr = clf.best_estimator_
+
+#The score obtained using the test set
+print svc_lr.score(X_test, y_test)
+
+##############################
+# k-Nearest Neighbors        #
+##############################
+
+parameters = { 'n_neighbors' : xrange(1 , 51), 'leaf_size' : xrange(5, 61, 5) }
+estimator_knn = KNeighborsClassifier()
+clf = GridSearchCV(estimator_knn, parameters, cv=5)
+clf.fit(X_train, y_train)
+
+print clf.best_estimator_
+print clf.best_score_
+
+##The chosen model
+svc_knn = clf.best_estimator_
+
+##Score obtained using the test set
+print svc_knn.score(X_test, y_test)
+
+##############################
+# Decision Trees             #
+##############################
+ 
+# Searching for the best parameters in the model
+parameters = {'max_depth': xrange(1, 51), 'min_samples_split': xrange(2, 11)}
+estimator_dt = DecisionTreeClassifier()
+clf = GridSearchCV(estimator_dt, parameters, cv=5)
+clf.fit(X_train, y_train)
+ 
+print clf.best_estimator_
+print clf.best_score_
+ 
+# The chosen model
+dt = clf.best_estimator_
+ 
+# The score obtained using the test set
+print dt.score(X_test, y_test)
+ 
+ 
+##############################
+# Random Forests             #
+##############################
+ 
+# Searching for the best parameters in the model
+parameters = {'max_depth': xrange(1, 51), 'min_samples_split': xrange(2, 11)}
+estimator_rf = RandomForestClassifier()
+clf = GridSearchCV(estimator_rf, parameters, cv=5)
+clf.fit(X_train, y_train)
+ 
+print clf.best_estimator_
+print clf.best_score_
+ 
+# The chosen model
+rf = clf.best_estimator_
+ 
+## The score obtained using the test set
+print rf.score(X_test, y_test)

@@ -30,7 +30,9 @@ terminator_svm = svm.SVC()
 ##############################
 
 #Parameter laden model search 
-parameters = { 'kernel' : ('linear', ), 'C' : [0.1, 0.5, 1, 5, 10, 50, 100] }
+parameters = { 'kernel' : ('linear', ),
+               'C' : [0.1, 0.5, 1, 5, 10, 50, 100] }
+
 clf = GridSearchCV(terminator_svm, parameters, cv=5 )
 clf.fit(X_train, y_train)
 
@@ -40,4 +42,41 @@ print clf.best_score_
 #The chosen model
 svc = clf.best_estimator_
 
-#
+#The score obtained using the test set
+print svc.score(X_test, y_test)
+
+##############################
+# yogi_genesis polynomial     #
+##############################
+
+#Searching for best parameters in the model
+parameters = { 'kernel': ('rbf',), 
+               'C': [0.1, 0.5, 1, 5, 10, 50, 100], 
+               'gamma' : [0.1, 0.5, 1, 3, 6, 10]}
+
+clf = GridSearchCV(terminator_svm, parameters, cv=5)
+clf.fit(X_train, y_train)
+
+print clf.best_estimator_
+print clf.best_score_
+
+#The chosen model
+svc_rbf = clf.best_estimator_
+
+##############################
+# Logistic Regression        #
+##############################
+
+
+#Parameter Search
+
+parameters = {'C' : [0.1, 0.5, 1, 5, 10, 50, 100]}
+estimator_lr = LogisticRegression()
+clf = GridSearchCV(estimator_lr, parameters, cv=5)
+clf.fit(X_train, y_train)
+
+print clf.best_estimator_
+print clf.best_score_
+
+#The chosen model
+svc_lr = clf.best_estimator_

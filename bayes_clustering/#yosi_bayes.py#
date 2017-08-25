@@ -55,3 +55,32 @@ cNew = np.zeros(N)
 it = 1
 
 while it <= maxit and not all(c == cNew):
+    #Write to output file if required 
+    if saveLog:
+        with open('centroids-' + str(it) + '.csv', 'w') as f:
+            for mu_i in mu:
+                for j in xrange(len(mu_i) - 1):
+                    f.write(str(mu_i[j])) + ',')
+                    f.write(str(mu_i[len(mu_i) -1]) + '\n')
+
+    c = np.copy(cNew)
+     
+    for i in xrange(N):
+        kmin = 1
+        minDist = float('Inf')
+
+        for k in xrange(K):
+            dist = np.linalg.norm(X[i, :] - mu[k, :])
+            if dist < minDist:
+                minDist = dist
+                kmin = k
+
+    cNew[i] = kmin + 1
+    
+    for k in xrange(1, K + 1):
+        Xk = X[cNew == k, :]
+        mu[k - 1] = np.sum(Xk, axis=0) / Xk.shape[0]
+    
+it += 1
+
+    return (c, mu, it)

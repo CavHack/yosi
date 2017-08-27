@@ -143,4 +143,36 @@ def EM_GMM(X, K=5, maxit=10, saveLog=True):
                 sigma = np.array(sigma)
 
 
-            
+            if saveLog:
+                with open('pi-' + str(it + 1) + '.csv', 'w') as f:
+                    for k in xrange(K - 1):
+                        f.write(str(pi[K - 1]))
+
+                        with open('mu-' + str(it + 1) + '.csv', 'w') as f:
+                            for m in mu:
+                                for k in xrange(D-1):
+                                    f.write(str(m[k]) + ',')
+                                    f.write(str(m[D-1]) + '\n')
+
+                        for k in xrange(K):
+                            cov_k = sigma[k]
+                            with open('Sigma-' + str(k + 1) + '-' +  str(it + 1 ) + '.csv', 'w') as f:
+                                for i in xrange(cov_k.shape[0]):
+                                    for j in xrange(cov_k.shape[1] - 1):
+                                        f.write(str(cov_k[i, j]) + ',')
+                                    f.write(str(cov_k[i, cov_k.shape[1] - 1]) + '\n')
+
+                                return (pi, mu, sigma, phi)
+
+
+                        if __name__ = '__main__':
+                            if len(sys.arg ) != 2:
+                                print 'Usage: python yosi_bayes.py <X.csv>'
+                                sys.exit(0)
+
+                    #Load Data
+                    X = load_data(sys.argv[1])
+
+                    #Apply clustering techniques
+                    (c, mu, it) = KMeans(X)
+                    (pi, mu, sigma, phi) = EM_GMM(X)

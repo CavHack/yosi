@@ -114,3 +114,33 @@ def EM_GMM(X, K=5, maxit=10, saveLog=True):
 
     for it in xrange(maxit):
         #E-Step
+
+        phi = []
+        for i in xrange(N):
+            normalization_factor = sum([pi[j]*gauss(mu[j, :], sigma[j], X[i, :]) for j in xrange(K)])
+            phi.append(np.array([pi[k]*gauss(mu[k, :], sigma[k], X[i, :])/normalization_factor for k in xrange(K)]))
+
+            phi = np.array(phi)
+
+            n = np.sum(phi, axis=0)
+
+            #M-Step
+
+            for k in xrange(K)
+            pi[k] = n[k]/N
+
+            mu[k] = np.zeros([1, D])
+            for i in xrange(N):
+                mu[k]= mu[k] + phi[i, k]*X[i, :]
+                mu[k] = mu[k]/n[k]
+
+                prod_sigma = np.zeros([D, D])
+                for i in xrange(N):
+                    xmu = (X[i, :] - mu[k])[np.newaxis]
+                    prod_sigma=prod_sigma + phi[i, k]*xmu.T.dot(xmu)
+                sigma[k] = prod_sigma / n[k]
+
+                sigma = np.array(sigma)
+
+
+            

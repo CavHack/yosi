@@ -52,3 +52,6 @@ if __name__ == '__main__':
             prob = []
             for y in set(y_train):
                 X_i = X_train[y_train == y, :]
+                mu_i = np.mean
+                cov_i = np.cov(X_i, rowvar=False)
+                prob.append(gauss(mu_i, cov_i, x_0) * pi[y])

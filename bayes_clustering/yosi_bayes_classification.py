@@ -52,6 +52,19 @@ if __name__ == '__main__':
             prob = []
             for y in set(y_train):
                 X_i = X_train[y_train == y, :]
-                mu_i = np.mean
+                mu_i = np.mean(X_i, axis=0)
                 cov_i = np.cov(X_i, rowvar=False)
                 prob.append(gauss(mu_i, cov_i, x_0) * pi[y])
+
+        #Factor for normalizing the posterior
+            norm = sum(prob)
+            prob = [p / norm for p in prob]
+            X_test_prob.append(prob)
+
+        #Writing to output file
+            N = X_test.shape[0]
+            with open('probs_test.csv', 'w') as outfile:
+                for i in xrange(N):
+                    for j in xrange(n_classes - 1):
+                        outfile.write(str(X_test_prob[i][j]) + ",")
+                        outfile.write(str(X_test_prob[i][j+1]) + "\n")

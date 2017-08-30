@@ -18,6 +18,7 @@ def load_data(input_file):
 return(X, y)
 
 def preprocess_data(X):
+
     """                                                                                         
     Creates a copy of training samples, preprocess it (centering and scaling) and               
     inserts a columns of ones (intercept)                                                       
@@ -25,6 +26,18 @@ def preprocess_data(X):
 
     Xtmp = np.copy(X)
     mu = np.mean(Xtmp, axis=0)
+    stdev = np.std(Xtmp, axis=0)
 
+def RiskFunction(X, y, beta):
+
+def GradientDescent(X, y, alpha, verbose=False, iterations=100):
+    """                                                                                         
+    Implements gradient descent for finding a solution for linear regression                    
+    X: Training Set inputs                                                                      
+    y: Training Set output                                                                      
+    alpha: Learning Rate                                                                        
+    verbose: If True, shows iterations and risk function                                        
+    iterations: Number of iterations allowed for the process                                    
+    """
 
 

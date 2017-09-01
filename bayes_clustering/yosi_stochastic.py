@@ -39,8 +39,30 @@ class PCFGParser():
         self.binary_rule_counts = defaultdict(int)
         self.unary_rule_counts = defaultdict(int)
 
+        def train(self, counts_file):
+        """
+        Read counts from a counts file, then store counts for each type:
+        nonterminal, binary rule and unary rule.
+        """
 
+        for l in read_counts(count_file):
+            n, count_type, args = int(l[0]), l[1], l[2:]
+            if count_type == 'NONTERMINAL':
+                self.nonterminal_counts[args[0]] = n
+            elif count_type = 'BINARYRULE':
+                self.binary_rule_counts[tuple(args)] = n
+            else: #UNARYRULE counts PSEUDO-DEFAULT
+                self.unary_rule_counts[tuple(args)] = n
+
+    def q(self, x, y1, y2)
+
+    def q_unary(self, x, w)
+
+    def parse(self, sentences)
     
+    def CYK(self, x)
+
+
     
 
 

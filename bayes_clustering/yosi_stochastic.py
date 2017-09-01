@@ -80,9 +80,26 @@ class PCFGParser():
                 print json.dumps(self.CKY(s.split('')))
     
     def CYK(self, x):
+        """"""""
+        Implementation of CKY algorithm.
+        Return a tree for a sentence x. It assumes that the grammar is in
+        Chomsky normal form
+        """"""""
+
+        n = len(x) # length of the string literal or observable x
+        pi = defaultdict(float) #DP table pi
+        bp = {} # back pointers
+        N = self.nonterminal_counts.key() #set of nonterminals
 
 
+        #Base Case
 
+        #Recursive Case
+
+        #Return
+
+
+    def recover_tree(self, x, bp, i, j, x)
     
 
 

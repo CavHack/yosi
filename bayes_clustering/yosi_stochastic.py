@@ -54,13 +54,33 @@ class PCFGParser():
             else: #UNARYRULE counts PSEUDO-DEFAULT
                 self.unary_rule_counts[tuple(args)] = n
 
-    def q(self, x, y1, y2)
+    def q(self, x, y1, y2):
+        """""
+        Return binary rule parameters for a rule such that x -> y1 y2.
+        """""
+        return float(self.binary_rule_counts[x, y1, y2]) /self.nonterminal_counts[x]
 
-    def q_unary(self, x, w)
+    def q_unary(self, x, w):
+        """""
+        Return unary rule parameters for a rule such that x -> w
+        """""
 
-    def parse(self, sentences)
+        return float(self.unary_rule_counts[x, w]) / self.nonterminal_counts[x]
+
+    def parse(self, sentences):
+        """"""""
+        Do syntactic parsing here for sentences that utilize the CKY algorithm.
+        Write parsed trees to stdout in JSON format.
+        """"""""
+
+        for s in sentences:
+            s = s.trip()
+
+            if s:
+                print json.dumps(self.CKY(s.split('')))
     
-    def CYK(self, x)
+    def CYK(self, x):
+
 
 
     

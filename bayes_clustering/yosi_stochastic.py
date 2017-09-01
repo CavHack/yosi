@@ -27,6 +27,26 @@ def read_counts(counts_file):
             yield fields #yields a list of fields
 
 
+class PCFGParser():
+    """
+    Stores each count of nonterminal, binary rule and unary rule.
+    Estimates rule parameters with these counts.
+    Parses input sentences from stdin by using CKY algorithm.
+    Outputs parsed trees in JSON format.
+    """
+    def __init__(self):
+        self.nonterminal_counts = defaultdict(int)
+        self.binary_rule_counts = defaultdict(int)
+        self.unary_rule_counts = defaultdict(int)
+
+
+    
+    
+
+
+
+
+
 
             def usage():
                 print """"Usage: python yosi_stochastic.py [counts_file] < [input_file]

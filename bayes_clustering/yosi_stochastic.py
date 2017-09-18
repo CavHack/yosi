@@ -9,7 +9,7 @@ from collections import defaultdict
 
 """
 Probabilistic Context-Free Grammar Parser
-Do syntactic partsing for input sequences based on PCFG
+Do syntactic parsing for input sequences based on PCFG
 """
 
 def read_counts(counts_file):
@@ -19,7 +19,7 @@ def read_counts(counts_file):
     try: 
         fi = open(counts_file, 'r')
     except IOError:
-        sys.stderr.write('ERROR: Cannot open %s.\n' % counts_file):
+        sys.stderr.write('ERROR: Cannot open %s.\n' % counts_file)
         sys.exit(1)
 
         for line in fi:
@@ -94,9 +94,56 @@ class PCFGParser():
 
         #Base Case
 
+        for i in xrange(n):
+            if sum([self.unary_rule_counts[X, x[i]] for X in N]) < 5: #if x[i] is infrequent word
+                w  = '_RARE_' # use _RARE_ instead of the actual word
+            else:
+                w = x[i]
+                for X in N:
+                    pi[i, i, X] = self.q_unary(X, w) # if X -> x[i] not in the set of rules, assign 0
+
+
         #Recursive Case
+        
+        for l in xrange(1, n):
+            for i in xrange(n-l):
+                j= i + l
+                for X in N:
+                    max_score=0
+                    args = None
+                    for R in self.binary_rule_counts.keys(): #search only within the rules with non-zero probability
+                        if R[0] == X: #consider rules which start from X
+
+                        Y, Z = R[1:]
+
+                        for s in xrange(i, j):
+                            if pi[i, s, Y] and pi[s + 1, j, Z]: #calculate score if both pi entries have non-zero score
+
+                                score = self.q(X, Y, Z) * pi[i, s, Y] * pi[s + 1, j, Z]
+                                if max_score < score:
+                                    max_score = score
+                                    args = Y, Z, s
+                    
+                    if max_score: #update DP table and back pointers
+                        pi[i, j, X] = max_score
+                        bp[i, j, X] = args
+
+
 
         #Return
+
+        if pi[0, n-1, '5']:
+            return self.recover_tree(x, bp, 0, n-1, 'S')
+        else: # if the tree does not have the start symbol 'S' at the root
+            max_score = 0
+            args = None
+            for X in N:
+                if max_score < pi[0, n-1, X]:
+                    max_score = pi[0, n-1, X]
+                    args = 0, n-1, X
+                    
+                    return self.recover_tree(x, bp, *args)
+        
 
 
     def recover_tree(self, x, bp, i, j, x)

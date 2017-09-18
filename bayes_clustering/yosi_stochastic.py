@@ -166,6 +166,13 @@ class PCFGParser():
 Read counts file to train a PCFG parser and parse sentences in input file"""""
 
 if __name__ == '__main__':
+    if len(sys.argv) != 2: #expect exactly one argument
+        usage()
+        sys.exit(2)
+
+        parser = PCFGParser() # initialize a PCFG parser
+        parser.train(sys.argv[1]) # train with a counts file
+        parser.parse(sys.stdin) #parse sentences from stdin
 
     
     

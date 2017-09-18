@@ -147,11 +147,17 @@ class PCFGParser():
 
 
     def recover_tree(self, x, bp, i, j, x)
-    
+        """
+        Return the list of the parsed tree with back pointers.
+        """
 
 
-
-
+        if i == j:
+            return [X, x[i]]
+        else:
+            Y, Z, s = bp[i, j, X]
+            return [X, self.recover_tree(x, bp, i, s, Y),
+                       self.recover_tree(x, bp, s+1, j, Z)]
 
 
             def usage():
